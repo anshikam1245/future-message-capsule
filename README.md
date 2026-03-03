@@ -1,4 +1,4 @@
-# Future Message Capsule 📬
+# Future Message Capsule 
 
 > *Write to the person you're becoming.*
 
@@ -16,15 +16,15 @@ No accounts. No servers. No one else can read it. Just you, your words, and time
 
 ## Features
 
-- **✍️ Message Input** — Write freely to your future self with a clean, distraction-free textarea
-- **📅 Unlock Date Picker** — Choose exactly when your capsule should open (date and time)
-- **📬 Animated Envelope** — After sealing, your message becomes a floating animated envelope that gently pulses while it waits
-- **⏳ Live Countdown Timer** — Days, hours, minutes, and seconds update every second in real time
-- **💥 Opening Interaction** — When the countdown reaches zero, an *"Open Your Capsule"* button appears; clicking it triggers a 3D envelope-flap animation with gold spark particles
-- **📖 Typewriter Reveal** — Your message is typed out character by character as if being read for the first time
-- **🔒 Fully Private** — Everything is stored in `localStorage` — no data ever leaves your device
-- **♻️ Page Refresh Safe** — Refresh anytime; your countdown resumes exactly where it left off
-- **🗑️ Discard Option** — Changed your mind? You can permanently delete your capsule at any point
+- **Message Input** — Write freely to your future self with a clean, distraction-free textarea
+- **Unlock Date Picker** — Choose exactly when your capsule should open (date and time)
+- **Animated Envelope** — After sealing, your message becomes a floating animated envelope that gently pulses while it waits
+- **Live Countdown Timer** — Days, hours, minutes, and seconds update every second in real time
+- **Opening Interaction** — When the countdown reaches zero, an *"Open Your Capsule"* button appears; clicking it triggers a 3D envelope-flap animation with gold spark particles
+- **Typewriter Reveal** — Your message is typed out character by character as if being read for the first time
+- **Fully Private** — Everything is stored in `localStorage` — no data ever leaves your device
+- **Page Refresh Safe** — Refresh anytime; your countdown resumes exactly where it left off
+- **Discard Option** — Changed your mind? You can permanently delete your capsule at any point
 
 ---
 
