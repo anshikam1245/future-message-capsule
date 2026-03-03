@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="description" content="Send a private message to your future self and unlock it later. A calm digital time capsule experience built by Anshika Mittal.">
+
+<meta name="author" content="Anshika Mittal">
+
+<!-- Open Graph (Link Preview) -->
+<meta property="og:title" content="Future Message Capsule">
+<meta property="og:description" content="Write a message to your future self and open it later. A private digital time capsule experience.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Future Message Capsule</title>
+
+  <!-- Google Fonts: Playfair Display for headings, DM Mono for body -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ========== HEADER ========== -->
+  <header>
+    <div class="header-eyebrow">✦ A letter across time ✦</div>
+    <h1>Future Message<br /><em>Capsule</em></h1>
+    <p class="header-sub">Write to the person you're becoming.</p>
+  </header>
+
+  <main>
+
+    <!-- ========== SECTION 1: INPUT FORM ========== -->
+    <!-- Shown when no capsule exists yet -->
+    <section id="input-section" class="card">
+      <label for="message-input" class="field-label">Your message</label>
+      <textarea
+        id="message-input"
+        placeholder="Dear future me…"
+        rows="7"
+        maxlength="2000"
+      ></textarea>
+
+      <label for="unlock-date" class="field-label">Unlock date</label>
+      <input type="datetime-local" id="unlock-date" />
+
+      <button id="seal-btn">Seal Capsule →</button>
+
+      <!-- Inline error message -->
+      <p id="error-msg" class="error hidden"></p>
+    </section>
+
+    <!-- ========== SECTION 2: COUNTDOWN ========== -->
+    <!-- Shown after sealing. Contains the animated envelope + timer. -->
+    <section id="countdown-section" class="card hidden">
+
+      <!-- ── ENVELOPE SVG ───────────────────────────────────────────
+           Built with pure SVG shapes so it scales perfectly.
+           JS adds .is-open class to trigger the flap animation.
+           .envelope-wrap provides the floating/pulse wrapper.
+      ─────────────────────────────────────────────────────────────── -->
+      <div class="envelope-wrap" id="envelope-wrap">
+        <svg class="envelope-svg" id="envelope-svg"
+             viewBox="0 0 240 160" xmlns="http://www.w3.org/2000/svg"
+             aria-label="Sealed envelope">
+
+          <!-- Envelope body (rectangle) -->
+          <rect class="env-body" x="4" y="30" width="232" height="126" rx="6"/>
+
+          <!-- Bottom-left and bottom-right fold triangles (decorative) -->
+          <polygon class="env-fold" points="4,156 120,90 236,156"/>
+
+          <!-- Left wing fold -->
+          <polygon class="env-wing env-wing-left"  points="4,30 4,156 104,93"/>
+          <!-- Right wing fold -->
+          <polygon class="env-wing env-wing-right" points="236,30 236,156 136,93"/>
+
+          <!-- Wax seal circle — sits on top of closed flap -->
+          <circle class="env-seal" cx="120" cy="86" r="14"/>
+          <!-- Tiny star inside wax seal -->
+          <text class="env-seal-glyph" x="120" y="91" text-anchor="middle">✦</text>
+
+          <!-- TOP FLAP — this is the element that rotates open.
+               transform-origin is the top edge of the flap (y=30).
+               CSS animates rotateX from 0 → -180deg on .is-open -->
+          <polygon class="env-flap" id="env-flap"
+                   points="4,30 120,100 236,30"/>
+        </svg>
+
+        <!-- Particle sparks that appear when envelope opens -->
+        <div class="sparks" id="sparks" aria-hidden="true">
+          <span></span><span></span><span></span>
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+      <!-- /envelope-wrap -->
+
+      <!-- Countdown label + grid — visible during waiting state -->
+      <div id="timer-area">
+        <p class="countdown-label">Your capsule opens in</p>
+        <div class="countdown-grid">
+          <div class="countdown-block">
+            <span id="cd-days">00</span>
+            <small>days</small>
+          </div>
+          <div class="countdown-block">
+            <span id="cd-hours">00</span>
+            <small>hours</small>
+          </div>
+          <div class="countdown-block">
+            <span id="cd-minutes">00</span>
+            <small>minutes</small>
+          </div>
+          <div class="countdown-block">
+            <span id="cd-seconds">00</span>
+            <small>seconds</small>
+          </div>
+        </div>
+        <p class="sealed-note">Sealed on <span id="sealed-date-display"></span></p>
+      </div>
+
+      <!-- "Open Capsule" button — hidden until countdown ends.
+           Clicking it triggers the envelope opening sequence. -->
+      <button id="open-btn" class="hidden btn-open">Open Your Capsule ↓</button>
+
+      <button id="reset-btn" class="btn-ghost">✕ Discard capsule</button>
+    </section>
+
+    <!-- ========== SECTION 3: REVEAL ========== -->
+    <!-- Shown after the envelope open animation completes. -->
+    <section id="reveal-section" class="card hidden">
+
+      <!-- Each child has .reveal-child class — JS adds .visible
+           in sequence to create a staggered fade-in effect -->
+      <h2 class="reveal-heading reveal-child">Your capsule has opened.</h2>
+      <p class="reveal-meta reveal-child">
+        Written on <span id="written-date-display"></span>
+      </p>
+
+      <!-- The message text is typed out character by character by JS -->
+      <div id="revealed-message" class="message-box reveal-child"></div>
+
+      <button id="new-capsule-btn" class="reveal-child">Write a new capsule</button>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>Time only moves forward. So do you.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

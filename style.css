@@ -1,0 +1,596 @@
+/* ============================================================
+   FUTURE MESSAGE CAPSULE — style.css  (v2 — animated upgrade)
+   Aesthetic: aged editorial, ink-dark, warm gold
+   New in v2:
+     • Animated envelope with opening flap
+     • Floating / pulse on sealed state
+     • Smooth cross-fade section transitions
+     • Staggered reveal children
+     • Typing-cursor blink
+     • Spark particles on open
+   ============================================================ */
+
+/* --- CSS Variables ---------------------------------------- */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  min-height: 100vh;
+
+  background: linear-gradient(
+    -45deg,
+    #0f172a,
+    #1e293b,
+    #111827,
+    #020617
+  );
+
+  background-size: 400% 400%;
+  animation: gradientShift 18s ease infinite;
+  color: white;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Slow background movement */
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.container {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(10px);
+  padding: 2rem;
+  border-radius: 12px;
+}
+
+
+:root {
+  --bg:          #0d0c0a;
+  --surface:     #151410;
+  --border:      #2e2b24;
+  --accent:      #c9a84c;
+  --accent-dim:  #7a6329;
+  --accent-glow: rgba(201,168,76,.18);
+  --text:        #e8e2d5;
+  --text-muted:  #7a7265;
+  --red:         #c0392b;
+  --radius:      4px;
+  --font-head:   'Playfair Display', Georgia, serif;
+  --font-body:   'DM Mono', 'Courier New', monospace;
+
+  /* Envelope palette */
+  --env-body:    #1c1a15;
+  --env-fold:    #252219;
+  --env-wing:    #201e18;
+  --env-flap:    #1c1a15;
+  --env-stroke:  #3a3628;
+  --env-seal:    #8b2e1a;
+  --env-seal-hi: #c0392b;
+}
+
+/* --- Reset & base ----------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.7;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+}
+
+/* --- Header ----------------------------------------------- */
+header {
+  text-align: center;
+  padding: 64px 24px 40px;
+  max-width: 560px;
+  width: 100%;
+}
+
+.header-eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  opacity: 0.8;
+}
+
+header h1 {
+  font-family: var(--font-head);
+  font-size: clamp(2.4rem, 6vw, 3.6rem);
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+
+header h1 em { font-style: italic; color: var(--accent); }
+
+.header-sub {
+  color: var(--text-muted);
+  font-size: 13px;
+  letter-spacing: 0.05em;
+}
+
+/* --- Main layout ------------------------------------------ */
+main {
+  width: 100%;
+  max-width: 560px;
+  padding: 0 20px 80px;
+  flex: 1;
+}
+
+/* ============================================================
+   CARD — base for all three sections
+   ============================================================ */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 36px 32px;
+  margin-bottom: 24px;
+  animation: fadeUp 0.5s ease both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.hidden { display: none !important; }
+
+/* --- Form elements ---------------------------------------- */
+.field-label {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+textarea,
+input[type="datetime-local"] {
+  width: 100%;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 14px;
+  padding: 12px 14px;
+  margin-bottom: 24px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  color-scheme: dark;
+}
+
+textarea:focus,
+input[type="datetime-local"]:focus {
+  border-color: var(--accent-dim);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+}
+
+textarea { resize: vertical; }
+
+/* --- Primary button --------------------------------------- */
+button {
+  display: block;
+  width: 100%;
+  padding: 14px 20px;
+  background: var(--accent);
+  color: #0d0c0a;
+  border: none;
+  border-radius: var(--radius);
+  font-family: var(--font-body);
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+  font-weight: 400;
+}
+
+button:hover  { background: #d4b060; box-shadow: 0 4px 20px rgba(201,168,76,.25); }
+button:active { transform: scale(0.98); }
+
+/* --- Ghost button ----------------------------------------- */
+.btn-ghost {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  margin-top: 24px;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+}
+
+.btn-ghost:hover {
+  background: transparent;
+  border-color: var(--red);
+  color: var(--red);
+  box-shadow: none;
+}
+
+/* --- Error message ---------------------------------------- */
+.error {
+  color: var(--red);
+  font-size: 12px;
+  margin-top: 12px;
+  letter-spacing: 0.04em;
+}
+
+
+/* ============================================================
+   ENVELOPE ANIMATION SYSTEM
+   ============================================================
+
+   HTML structure (see index.html):
+     .envelope-wrap          ← floating wrapper
+       svg.envelope-svg      ← drawing canvas
+         rect.env-body       ← body of envelope
+         polygon.env-fold    ← centre bottom-V seam
+         polygon.env-wing    ← left/right fold wings
+         circle.env-seal     ← wax seal disc
+         text.env-seal-glyph ← ✦ symbol inside seal
+         polygon.env-flap    ← TOP FLAP (animated)
+       .sparks               ← particle burst container
+
+   JS adds .is-open to .envelope-wrap to trigger the whole
+   open sequence via CSS transitions / animations.
+*/
+
+/* Outer wrapper — provides float animation and spark anchor */
+.envelope-wrap {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin: 8px auto 32px;
+  width: 240px;
+
+  /* Gentle up/down float while in sealed, waiting state */
+  animation: envelopeFloat 4s ease-in-out infinite;
+}
+
+/* Stop floating when opening */
+.envelope-wrap.is-open {
+  animation: none;
+}
+
+/* Float keyframe — 6px vertical oscillation */
+@keyframes envelopeFloat {
+  0%, 100% { transform: translateY(0px);  }
+  50%       { transform: translateY(-6px); }
+}
+
+/* The SVG drawing */
+.envelope-svg {
+  width: 240px;
+  height: 160px;
+  overflow: visible;      /* sparks need to escape SVG bounds */
+  filter: drop-shadow(0 8px 24px rgba(0,0,0,.6));
+}
+
+/* Glow up when opened */
+.envelope-wrap.is-open .envelope-svg {
+  filter: drop-shadow(0 8px 32px rgba(201,168,76,.3));
+  transition: filter 0.8s ease 0.4s;
+}
+
+/* --- Envelope SVG shape fills & strokes ------------------- */
+.env-body {
+  fill: var(--env-body);
+  stroke: var(--env-stroke);
+  stroke-width: 1.2;
+}
+
+.env-fold {
+  fill: var(--env-fold);
+  stroke: var(--env-stroke);
+  stroke-width: 0.8;
+}
+
+.env-wing {
+  fill: var(--env-wing);
+  stroke: var(--env-stroke);
+  stroke-width: 0.8;
+}
+
+/* Wax seal fades out as the envelope opens */
+.env-seal {
+  fill: var(--env-seal);
+  stroke: var(--env-seal-hi);
+  stroke-width: 1;
+  transition: opacity 0.35s ease;
+}
+
+.env-seal-glyph {
+  font-size: 10px;
+  fill: rgba(255,255,255,.7);
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+
+.envelope-wrap.is-open .env-seal,
+.envelope-wrap.is-open .env-seal-glyph {
+  opacity: 0;
+}
+
+/* --- TOP FLAP ─ 3D fold-open animation --------------------
+   SVG polygons don't support perspective natively.
+   Trick: use CSS transform-box:fill-box so transform-origin
+   resolves relative to the element's own bounding box.
+   Then rotateX flips the flap backward along its top edge.
+*/
+.env-flap {
+  fill: var(--env-flap);
+  stroke: var(--env-stroke);
+  stroke-width: 1.2;
+
+  /* Anchor the hinge at the element's top center */
+  transform-box:    fill-box;
+  transform-origin: top center;
+
+  /* Duration slightly longer than seal fade for natural feel */
+  transition: transform 0.75s cubic-bezier(0.4, 0, 0.2, 1) 0.1s;
+}
+
+/* Open state: flap swings back 180deg — lies flat behind body */
+.envelope-wrap.is-open .env-flap {
+  transform: rotateX(-180deg);
+}
+
+
+/* --- SPARK PARTICLES ─ burst on open ----------------------
+   6 <span> children, each flies to a unique (--sx, --sy) offset.
+   The .active class on the parent .sparks element starts all
+   keyframe animations simultaneously (with small nth-child delays).
+*/
+.sparks {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.sparks span {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0;
+  transform: translate(-50%, -50%);
+}
+
+/* Attach animation when parent gets .active class */
+.sparks.active span {
+  animation: spark 0.7s ease-out forwards;
+}
+
+/* Each span flies in its own direction via CSS custom properties */
+.sparks span:nth-child(1) { --sx: -60px; --sy: -50px; animation-delay: 0.00s; }
+.sparks span:nth-child(2) { --sx:  60px; --sy: -50px; animation-delay: 0.05s; }
+.sparks span:nth-child(3) { --sx: -80px; --sy:  10px; animation-delay: 0.10s; }
+.sparks span:nth-child(4) { --sx:  80px; --sy:  10px; animation-delay: 0.10s; }
+.sparks span:nth-child(5) { --sx: -30px; --sy:  60px; animation-delay: 0.15s; }
+.sparks span:nth-child(6) { --sx:  30px; --sy:  60px; animation-delay: 0.15s; }
+
+/* Spark keyframe: fade out while translating to final position */
+@keyframes spark {
+  0%   { opacity: 1; transform: translate(-50%,-50%) scale(1.2); }
+  100% { opacity: 0;
+         transform:
+           translate(calc(-50% + var(--sx)), calc(-50% + var(--sy)))
+           scale(0.3); }
+}
+
+
+/* ============================================================
+   COUNTDOWN AREA inside #countdown-section
+   ============================================================ */
+#timer-area {
+  transition: opacity 0.5s ease;
+}
+
+/* JS adds this class to fade out the timer when it hits zero */
+#timer-area.fading {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.countdown-label {
+  text-align: center;
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 28px;
+}
+
+.countdown-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: 32px;
+}
+
+.countdown-block {
+  text-align: center;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 8px;
+}
+
+.countdown-block span {
+  display: block;
+  font-family: var(--font-head);
+  font-size: clamp(1.8rem, 5vw, 2.6rem);
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.countdown-block small {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.sealed-note {
+  text-align: center;
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+}
+
+
+/* --- "Open Capsule" button --------------------------------
+   Replaces the timer once countdown ends.
+   Transparent-bordered style with a looping ring pulse to
+   invite the user to interact.
+*/
+.btn-open {
+  margin-top: 24px;
+  background: transparent;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  letter-spacing: 0.12em;
+  font-size: 13px;
+  position: relative;
+  overflow: visible;        /* let ::before ring bleed outside */
+  animation: fadeUp 0.6s ease both;
+}
+
+/* Pulsing ring around the button */
+.btn-open::before {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: var(--radius);
+  border: 1px solid var(--accent);
+  opacity: 0;
+  animation: ringPulse 2s ease-out infinite;
+}
+
+@keyframes ringPulse {
+  0%   { opacity: 0.5; transform: scale(1);    }
+  100% { opacity: 0;   transform: scale(1.1);  }
+}
+
+.btn-open:hover {
+  background: var(--accent-glow);
+  box-shadow: 0 0 24px rgba(201,168,76,.2);
+}
+
+
+/* ============================================================
+   REVEAL SECTION — staggered fade-in children
+   ============================================================
+
+   All direct children carry .reveal-child.
+   They start invisible and slightly offset downward.
+   JS adds .visible to each child with a staggered setTimeout
+   delay so they cascade in one by one.
+*/
+.reveal-child {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+}
+
+.reveal-child.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-heading {
+  font-family: var(--font-head);
+  font-size: 1.6rem;
+  font-weight: 400;
+  font-style: italic;
+  text-align: center;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+.reveal-meta {
+  text-align: center;
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  margin-bottom: 24px;
+}
+
+/* The container where JS types the message text */
+.message-box {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 20px 18px;
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--text);
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin-bottom: 28px;
+  min-height: 60px;
+}
+
+/* Blinking cursor appended by JS while typing is in progress */
+.typing-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  background: var(--accent);
+  vertical-align: text-bottom;
+  margin-left: 2px;
+  animation: blink 0.75s step-end infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+
+/* --- Footer ----------------------------------------------- */
+footer {
+  text-align: center;
+  padding: 24px;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+  opacity: 0.5;
+  text-transform: uppercase;
+}
+
+/* --- Responsive ------------------------------------------- */
+@media (max-width: 400px) {
+  .card              { padding: 24px 18px; }
+  .countdown-grid    { gap: 6px; }
+  .envelope-wrap,
+  .envelope-svg      { width: 200px; }
+}
+
