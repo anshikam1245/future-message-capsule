@@ -1,6 +1,3 @@
-
-# Future Message Capsule 
-=======
 # Future Message Capsule
 
 A private digital time capsule experience that lets users write a message to their future self, seal it behind a chosen date, and unlock it when the time arrives. Built with vanilla web technologies, it recreates the quiet ritual of letter-writing through interaction design and animation.
