@@ -1,8 +1,7 @@
-<<<<<<< HEAD
+
 # Future Message Capsule 
 =======
 # Future Message Capsule
->>>>>>> 20f88ca (Update README and add MIT license)
 
 A private digital time capsule experience that lets users write a message to their future self, seal it behind a chosen date, and unlock it when the time arrives. Built with vanilla web technologies, it recreates the quiet ritual of letter-writing through interaction design and animation.
 
@@ -18,7 +17,6 @@ The aesthetic draws from aged editorial print, ink-dark interfaces, and warm gol
 
 ## Features
 
-<<<<<<< HEAD
 - **Message Input** — Write freely to your future self with a clean, distraction-free textarea
 - **Unlock Date Picker** — Choose exactly when your capsule should open (date and time)
 - **Animated Envelope** — After sealing, your message becomes a floating animated envelope that gently pulses while it waits
