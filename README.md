@@ -44,7 +44,6 @@ The revealed message is typed into the display container one character at a time
 
 ### Discard and Reset
 A ghost-styled discard button on the countdown section prompts the user for confirmation before permanently deleting the capsule and returning to the input form. A matching button on the reveal section clears the capsule and opens a fresh compose view.
->>>>>>> 20f88ca (Update README and add MIT license)
 
 ---
 
